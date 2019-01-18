@@ -48,6 +48,8 @@ Virtual gamepad class
             ioctl(_this.fd, uinput.UI_SET_EVBIT, uinput.EV_ABS);
             ioctl(_this.fd, uinput.UI_SET_ABSBIT, uinput.ABS_X);
             ioctl(_this.fd, uinput.UI_SET_ABSBIT, uinput.ABS_Y);
+            ioctl(_this.fd, uinput.UI_SET_ABSBIT, uinput.ABS_RX);
+            ioctl(_this.fd, uinput.UI_SET_ABSBIT, uinput.ABS_RY);
             uidev = new uinputStructs.uinput_user_dev;
             uidev_buffer = uidev.ref();
             uidev_buffer.fill(0);
@@ -64,6 +66,14 @@ Virtual gamepad class
             uidev.absmin[uinput.ABS_Y] = 0;
             uidev.absfuzz[uinput.ABS_Y] = 0;
             uidev.absflat[uinput.ABS_Y] = 15;
+            uidev.absmax[uinput.ABS_RX] = 255;
+            uidev.absmin[uinput.ABS_RX] = 0;
+            uidev.absfuzz[uinput.ABS_RX] = 0;
+            uidev.absflat[uinput.ABS_RX] = 15;
+            uidev.absmax[uinput.ABS_RY] = 255;
+            uidev.absmin[uinput.ABS_RY] = 0;
+            uidev.absfuzz[uinput.ABS_RY] = 0;
+            uidev.absflat[uinput.ABS_RY] = 15;
             return fs.write(_this.fd, uidev_buffer, 0, uidev_buffer.length, null, function(err) {
               var error1;
               if (err) {

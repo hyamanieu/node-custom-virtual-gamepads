@@ -1,10 +1,17 @@
-# node-virtual-gamepads
+# node-custom-virtual-gamepads
 
-This nodejs application provides the possibility to use your smartphone as a gamepad controller
-on Linux OS simply by reaching a local address.
+This nodejs application provides the possibility to use your smartphone 
+as a gamepad controller on Linux OS simply by reaching a local address.
 You can virtually plug **up to 4** gamepad controllers.
 
-Demo
+It is forked from [node-virtual-gamepads][original] and modified to allow for changing
+the type of gamepad, accepting up to 8 buttons and 2 joysticks. 
+
+**note the readme is different than the original one!**
+
+[original]: https://github.com/jehervy/node-virtual-gamepads
+
+Demo of the original (the same can be done with this version)
 ----
 Demo video 1 player in game [here](https://www.youtube.com/watch?v=OWgWugNsF7w)
 
@@ -13,10 +20,11 @@ Demo video 3 players on EmulStation [here](https://www.youtube.com/watch?v=HQROn
 Prerequisite
 ------------
 This application is only compatible with Linux OS with the **uinput** kernel module installed.
+You also need python3.
 
 Installation
 ------------
-    git clone https://github.com/miroof/node-virtual-gamepads
+    git clone https://github.com/hyamanieu/node-custom-virtual-gamepads
     cd node-virtual-gamepads
     npm install
 
@@ -40,7 +48,56 @@ with the editor of you choice and adjust the values.
 
 To start the server run
     
-    sudo node main.js
+    python3 start_custom_virtual_gamepad.py
+    
+This will start the server as shown in the original demo.
+
+If you want to use your own gamepad, simply run
+
+    python3 start_custom_virtual_gamepad.py path_to_gamepad.svg
+    
+Changing the gamepad
+--------------------
+
+To make your own custom gamepad, the easiest is to modify the original
+svg under ./public/images/controler_extracted.svg
+
+You then need to modify or delete the objects in the layer named *Cursors* 
+(decrease the layer transparency to see them).
+
+For the buttons: the binding is done under the attribute
+*data-code* of the button object. Under Inkscape, you can access the object 
+attributes with the XML editor (ctrl+shift+X).
+In case you create the SVG from scratch, here is the list of code for each of the 
+8 buttons for conveniance. You do not need to add them all.
+
+```
+uinput.BTN_A         = 0x130;
+uinput.BTN_B         = 0x131;
+uinput.BTN_X         = 0x133;
+uinput.BTN_Y         = 0x134;
+uinput.BTN_TL        = 0x136;
+uinput.BTN_TR        = 0x137;
+uinput.BTN_SELECT    = 0x13a;
+uinput.BTN_START     = 0x13b;
+```
+
+you can remove the joystick. Simply delete the circle with object id 
+`dirCenter` in the *Cursors* layer.
+
+You can add a second joystick. For now, it must be added exactly on the 
+oposite side of the first one. You need to add another small object
+with id `dirCenter2` (copy & paste the first). You cannot have only
+the second joystick.
+
+There are two ugly custom examples:
+ * /public/images/0js_4buttons.svg
+ * /public/images/2js_4btn.svg
+
+Improving custom virtual gamepads
+---------------------------------
+The implementation is quite dirty. If you can rewrite what the python3
+code does directly in main.js, it may be easier to use.
 
 Usage
 -----

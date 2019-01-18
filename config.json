@@ -1,6 +1,6 @@
 {
-  "port": 80,
+  "port": 5000,
   "useGamepadByDefault": false,
   "analog": true,
-  "logLevel": "info"
+  "logLevel": "debug"
 }

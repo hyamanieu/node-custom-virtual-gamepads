@@ -1,37 +1,7 @@
-<html>
-    <head>
-        <title>Virtual gamepad</title>
-        <link rel="icon" type="image/png" href="/images/gamepad_icons/favicon_32.png" />
-        <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
-        <link rel="manifest" href="/images/gamepad_icons/manifest.json">
-        <meta name="mobile-web-app-capable" content="yes">
-        <link rel="icon" sizes="192x192" href="/images/gamepad_icons/launcher-icon-4x.png">
-        <script src="/js/lib/jquery.js"></script>
-        <script src="/js/lib/socketio.js"></script>
-        <script src="/js/virtualjoystick.js"></script>
-        <script src="/js/virtual_gamepad_client.js"></script>
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-    </head>
-    <body>
-        <div id="slotIndicatorContainer">
-            <table id="tableIndicator">
-                <tr>
-                    <td><div id="indicator_1" class="indicator"></div></td>
-                    <td><div id="indicator_2" class="indicator"></div></td>
-                    <td><div id="indicator_3" class="indicator"></div></td>
-                    <td><div id="indicator_4" class="indicator"></div></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>4</td>
-                </tr>
-            </table>
-        </div>
-        
-       <!-- will be filled by python -->
-       <svg
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -647,8 +617,3 @@
     </g>
   </g>
 </svg>
-
-       <!-- end of autofilling -->
-        
-    </body>
-</html>
