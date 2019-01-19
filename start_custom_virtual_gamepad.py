@@ -7,6 +7,7 @@ Created on Fri Jan 18 08:28:59 2019
 """
 import os
 import sys
+import subprocess
 
 DIR_PATH = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_SVG = os.path.join(DIR_PATH,'public','images','controler_extracted.svg')
@@ -32,6 +33,7 @@ def process_inputs(argv):
 
 if __name__ == '__main__':
     fp = process_inputs(sys.argv)
+    print("Setting up following gamepad: {}".format(fp))
     with open(fp) as f:
         line = f.readline()
         while line:
@@ -63,5 +65,5 @@ if __name__ == '__main__':
         f.write(new_html)
         
     
-    os.system('sudo node main.js')
+    subprocess.run(['sudo','node','main.js'], cwd=DIR_PATH)
     
