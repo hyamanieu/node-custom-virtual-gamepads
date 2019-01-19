@@ -90,9 +90,9 @@ oposite side of the first one. You need to add another small object
 with id `dirCenter2` (copy & paste the first). You cannot have only
 the second joystick.
 
-There are two ugly custom examples:
- * /public/images/0js_4buttons.svg
- * /public/images/2js_4btn.svg
+There are two custom examples:
+ * /public/images/gamepad1js_1btn.svg
+ * /public/images/gamepad1js4btn.svg
 
 Improving custom virtual gamepads
 ---------------------------------
