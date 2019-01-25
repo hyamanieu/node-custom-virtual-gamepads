@@ -9,4 +9,4 @@ virtual gamepad.
 @author: hyamanieu
 """
 
-from start_custom_virtual_gamepad import set_up_gamepad
+from .start_custom_virtual_gamepad import set_up_gamepad
