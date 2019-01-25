@@ -26,13 +26,7 @@ def process_inputs(argv):
     
     
     
-
-
-
-
-
-if __name__ == '__main__':
-    fp = process_inputs(sys.argv)
+def set_up_gamepad(fp=DEFAULT_SVG):
     print("Setting up following gamepad: {}".format(fp))
     with open(fp) as f:
         line = f.readline()
@@ -66,4 +60,11 @@ if __name__ == '__main__':
         
     
     subprocess.run(['sudo','node','main.js'], cwd=DIR_PATH)
+
+
+
+
+if __name__ == '__main__':
+    fp = process_inputs(sys.argv)
+    set_up_gamepad(fp)
     
