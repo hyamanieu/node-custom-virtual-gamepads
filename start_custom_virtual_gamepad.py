@@ -8,6 +8,7 @@ Created on Fri Jan 18 08:28:59 2019
 import os
 import sys
 import subprocess
+import signal
 
 DIR_PATH = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_SVG = os.path.join(DIR_PATH,'public','images','controler_extracted.svg')
@@ -23,9 +24,12 @@ def process_inputs(argv):
         return DEFAULT_SVG
     else:
         return argv[1]
+
+def sigterm_detected(thin, thing):
+    raise
     
-    
-    
+signal.signal(signal.SIGTERM,sigterm_detected)
+
 def set_up_gamepad(fp=DEFAULT_SVG):
     print("Setting up following gamepad: {}".format(fp))
     with open(fp) as f:
@@ -57,14 +61,16 @@ def set_up_gamepad(fp=DEFAULT_SVG):
         
     with open(gamepad_html,'w') as f:
         f.write(new_html)
-        
     
-    subprocess.run(['sudo','node','main.js'], cwd=DIR_PATH)
+    p = subprocess.Popen(['node','main.js'], cwd=DIR_PATH, preexec_fn=os.setsid)
+    print("virtual gamepad running with PID: ",p.pid)
+    return p
 
 
 
 
 if __name__ == '__main__':
     fp = process_inputs(sys.argv)
-    set_up_gamepad(fp)
-    
+    p = set_up_gamepad(fp)
+    p.wait()
+    os.killpg(os.getpgid(p.pid), signal.SIGTERM)
