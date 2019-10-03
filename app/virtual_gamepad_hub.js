@@ -5,7 +5,7 @@ Created by MIROOF on 04/03/2015
 Virtual gamepad hub class
  */
 
-(function() {
+(function () {
   var config, gamepad, virtual_gamepad_hub, winston;
 
   gamepad = require('./virtual_gamepad');
@@ -13,10 +13,11 @@ Virtual gamepad hub class
   config = require('../config.json');
 
   winston = require('winston');
+  padId = 0;
 
   winston.level = config.logLevel;
 
-  virtual_gamepad_hub = (function() {
+  virtual_gamepad_hub = (function () {
     function virtual_gamepad_hub() {
       var i, j;
       this.gamepads = [];
@@ -25,35 +26,24 @@ Virtual gamepad hub class
       }
     }
 
-    virtual_gamepad_hub.prototype.connectGamepad = function(callback) {
-      var freeSlot, padId;
-      padId = 0;
-      freeSlot = false;
-      while (!freeSlot && padId < 4) {
-        if (!this.gamepads[padId]) {
-          freeSlot = true;
-        } else {
-          padId++;
-        }
-      }
-      if (!freeSlot) {
-        winston.log('warning', "Couldn't add new Gamepad: no slot left.");
+    virtual_gamepad_hub.prototype.connectGamepad = function (callback) {
+
+      padId++;
+
+      winston.log('info', 'Gamepad number', padId);
+      this.gamepads[padId] = new gamepad();
+      return this.gamepads[padId].connect(function () {
+        return callback(padId);
+      }, function (err) {
         return callback(-1);
-      } else {
-        winston.log('info', 'Gamepad number', padId);
-        this.gamepads[padId] = new gamepad();
-        return this.gamepads[padId].connect(function() {
-          return callback(padId);
-        }, function(err) {
-          return callback(-1);
-        });
-      }
+      });
+
     };
 
-    virtual_gamepad_hub.prototype.disconnectGamepad = function(padId, callback) {
+    virtual_gamepad_hub.prototype.disconnectGamepad = function (padId, callback) {
       if (this.gamepads[padId]) {
-        return this.gamepads[padId].disconnect((function(_this) {
-          return function() {
+        return this.gamepads[padId].disconnect((function (_this) {
+          return function () {
             _this.gamepads[padId] = void 0;
             return callback();
           };
@@ -61,7 +51,7 @@ Virtual gamepad hub class
       }
     };
 
-    virtual_gamepad_hub.prototype.sendEvent = function(padId, event) {
+    virtual_gamepad_hub.prototype.sendEvent = function (padId, event) {
       if (this.gamepads[padId]) {
         return this.gamepads[padId].sendEvent(event);
       }

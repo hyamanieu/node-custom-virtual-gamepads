@@ -63,7 +63,8 @@ def set_up_gamepad(fp=DEFAULT_SVG):
         f.write(new_html)
     
     p = subprocess.Popen(['node','main.js'], cwd=DIR_PATH, preexec_fn=os.setsid,
-                         stdout=subprocess.PIPE)
+                         stdout=subprocess.PIPE,
+                         close_fds=True)
     print("virtual gamepad running with PID: ",p.pid)
     return p
 
